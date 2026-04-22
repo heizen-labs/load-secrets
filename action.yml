@@ -1,0 +1,42 @@
+name: 'Heizen Load Secrets'
+description: 'Fetch secrets from Heizen Project Studio and load them into workflow env or write a .env file.'
+author: 'Heizen Labs'
+
+inputs:
+  project-id:
+    description: 'Heizen project identifier (e.g. proj_123).'
+    required: true
+  environment:
+    description: 'Heizen environment name (e.g. production, staging).'
+    required: true
+  api-key:
+    description: 'Heizen Studio API key. Usually from GitHub secrets.'
+    required: true
+  output-path:
+    description: 'Optional file path to write env content (e.g. ./.env). If omitted, values are exported to workflow env.'
+    required: false
+    default: ''
+  base-url:
+    description: 'Optional custom API base URL. Defaults to https://api.studio.heizen.work.'
+    required: false
+    default: ''
+  override-existing:
+    description: 'Whether to override variables that already exist in the workflow environment.'
+    required: false
+    default: 'false'
+
+outputs:
+  secret-count:
+    description: 'Total number of secrets fetched from Heizen.'
+  exported-count:
+    description: 'Number of variables exported to workflow env.'
+  output-path:
+    description: 'Resolved output path when a file was written.'
+
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
+
+branding:
+  icon: 'lock'
+  color: 'blue'
